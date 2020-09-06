@@ -30,6 +30,7 @@ client.on('message', (message) => {
 				message.channel.send('I only know these words:');
 				message.channel.send('!fortune (!f): Get your fortune told');
 				message.channel.send('!compliment (!c): Compliment 4 U!');
+				message.channel.send('!nom');
 				break;
 			case 'compliment':
 			case 'c':
@@ -38,6 +39,9 @@ client.on('message', (message) => {
 			case 'fortune':
 			case 'f':
 				fortuneCookie(message);
+				break;
+			case 'nom':
+				message.channel.send('https://tenor.com/view/hawk-gif-18338314');
 				break;
 			case 'rap':
 				message.channel.send('no thanks');
