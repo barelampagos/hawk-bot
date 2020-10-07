@@ -10,8 +10,43 @@ client.on('ready', () => {
 });
 
 client.on('message', (message) => {
+	// Emoji Reaction for REQUEST
+	if (
+		message.content.startsWith('[REQUEST]') &&
+		message.author.username === 'Hawk'
+	) {
+		message.react('✅');
+		message.react('❌');
+	}
+
+	// Listen for any character rolls
+	if (message.author.username === 'Mudamaid 40') {
+		var character = message.embeds[0];
+
+		if (character) {
+			if (message.embeds[0].description.includes('LOOΠΔ')) {
+				// Fetch yama
+				client.users.fetch('176183596204294144').then(
+					(user) => {
+						console.log(user);
+
+						message.channel.send(
+							`[BOUNTY] @ here - ${user} is on the HUNT! If you claim ${character.author.name} for ${user}, you can earn up to 500 kakera (first half of claim reset) or 250 kakera (second half). Only if you want to!`
+						);
+					},
+					(user) => {}
+				);
+
+				//console.log(yama);
+			}
+		}
+
+		//if (character) message.react('🙏');
+	}
+
 	if (message.author.bot) return;
 
+	// Bot Commands
 	if (message.content.startsWith(PREFIX)) {
 		console.log('=====================');
 		console.log(`[${message.author.tag}]: ${message.content}`);
@@ -49,6 +84,40 @@ client.on('message', (message) => {
 			default:
 			// nothing
 		}
+	}
+
+	// // Request
+	console.log(`[${message.author.tag}]: ${message}`);
+});
+
+client.on('messageReactionAdd', (messageReaction, user) => {
+	if (user.bot) return;
+	//console.log(messageReaction);
+
+	// Only accept specific Emoji
+	if (messageReaction._emoji.name === '🙏') {
+		var character = messageReaction.message.embeds[0]
+			? messageReaction.message.embeds[0].author.name
+			: '';
+		//console.log(character);
+
+		if (character) {
+			messageReaction.message.channel.send(
+				`[REQUEST] @here - ${user} requests ${character} , do you accept?`
+			);
+		}
+	} else if (messageReaction._emoji.name === '✅') {
+		var character = messageReaction.message.content.split(' ')[5];
+
+		messageReaction.message.channel.send(
+			`[ACCEPT] @here - ${user} ACCEPTS request for ${character}.`
+		);
+	} else if (messageReaction._emoji.name === '❌') {
+		var character = messageReaction.message.content.split(' ')[5];
+
+		messageReaction.message.channel.send(
+			`[DENY] @here - ${user} DENIES request for ${character}.`
+		);
 	}
 });
 
