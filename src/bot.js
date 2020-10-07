@@ -28,10 +28,8 @@ client.on('message', (message) => {
 				// Fetch yama
 				client.users.fetch('176183596204294144').then(
 					(user) => {
-						console.log(user);
-
 						message.channel.send(
-							`[BOUNTY] @ here - ${user} is on the HUNT! If you claim ${character.author.name} for ${user}, you can earn up to 500 kakera (first half of claim reset) or 250 kakera (second half). Only if you want to!`
+							`[BOUNTY] @here - ${user} is on the HUNT! If you claim ${character.author.name} for ${user}, you can earn up to 500 kakera (first half of claim reset) or 250 kakera (second half). Only if you want to!`
 						);
 					},
 					(user) => {}
